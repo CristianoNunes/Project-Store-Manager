@@ -12,18 +12,18 @@ const createSale = async (itensSold) => {
 };
 
 // Desafio 6 - Listar todas as vendas
-const getAllSales = async() => {
+const getAllSales = async () => {
   return { sales: await connection()
     .then((db) => db.collection('sales').find().toArray())};
 };
 
 // Desafio 6 - Busca uma venda pelo id
-const findByIdSale = async(id) => {
+const findByIdSale = async (id) => {
   return await connection().then((db) => db.collection('sales').findOne(ObjectId(id)));
 };
 
 // Desafio 7 - Atualizar uma venda pelo id
-const updateByIdSale = async(id, itensSold) => {
+const updateByIdSale = async (id, itensSold) => {
   const { insertedId } = await connection()
     .then((db) => db.collection('sales')
       .updateOne({_id: ObjectId}, { $set:{ itensSold } }));
@@ -31,9 +31,10 @@ const updateByIdSale = async(id, itensSold) => {
 };
 
 // Desafio 8 - Deletar uma venda pelo id
-const deleteByIdSale = async(id) => {
+const deleteByIdSale = async (id) => {
   return await connection().then((db) => db.collection('sales')
-    .deleteOne({ _id: ObjectId(id) }));
+    .deleteOne({ _id: ObjectId(id) }))
+    .catch(err => console.error(err));
 };
 
 module.exports = {

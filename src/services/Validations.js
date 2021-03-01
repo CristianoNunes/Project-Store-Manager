@@ -45,11 +45,8 @@ const validationId = (id) => {
 };
 
 const validationIdSale = (id) => {
-  const idLength = 24;
-  if(id.length != idLength) {
-    return false;
-  }
-  return true;
+  const lengthId = 24;
+  return (id.length === lengthId && id !== undefined);
 };
 
 const validateSale = (itensSold) => {

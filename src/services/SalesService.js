@@ -14,10 +14,17 @@ const getAllSales = async () => {
 };
 
 // Desafio 6 - Busca uma venda pelo id
+// const findByIdSale = async (id) => {
+//   const validation = validationIdSale(id);
+//   if(!validation) return {status: 'failed'};
+//   return await Sales.findByIdSale(id);
+// };
 const findByIdSale = async (id) => {
-  const validation = validationIdSale(id);
-  if(!validation) return {message: 'Sale not found'};
-  return await Sales.findByIdSale(id);
+  if (validationIdSale(id)) {
+    const result = await Sales.findByIdSale(id);
+    if (result) return { status: 'OK', result};
+  }
+  return { status: 'NOK', result: 'Sale not found' };
 };
 
 // Desafio 7 - Atualizar uma venda pelo id
@@ -32,13 +39,12 @@ const updateByIdSale = async (id, itensSold) => {
 
 // Desafio 8 - Deletar uma venda pelo id
 const deleteByIdSale = async (id) => {
-  const sale = await findByIdSale(id);
-  if(sale.message === 'Sale not found') {
-    return {message: 'Wrong sale ID format'};  
-  } else {
-    await Sales.deleteByIdSale(id);
-    return sale;
+  const result = await Sales.findByIdSale(id);
+  if (result) {
+    Sales.deleteByIdSale(id);
+    return { status: 'OK', result};
   }
+  return { status: 'NOK', result: 'Wrong sale ID format' };
 };
 
 module.exports = {
